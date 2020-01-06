@@ -530,7 +530,10 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: EasyDOTween_Physics;EasyDOTween_Physics2D;EasyDOTween_Sprite;EasyDOTween_UI;EasyDOTween_Audio
+    4: EasyDOTween_Audio;EasyDOTween_Physics;EasyDOTween_Physics2D;EasyDOTween_Sprite;EasyDOTween_UI
+    7: EasyDOTween_Audio;EasyDOTween_Physics;EasyDOTween_Physics2D;EasyDOTween_Sprite;EasyDOTween_UI
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
