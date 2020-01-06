@@ -1,5 +1,3 @@
-using System;
-using DG.Tweening;
 using DG.Tweening.Core;
 using UnityEditor;
 using UnityEngine;
@@ -12,41 +10,41 @@ namespace EasyDOTween.Editor
         static void OnScriptsReloaded()
         {
             var dotweenSettings = Resources.Load<DOTweenSettings>(nameof(DOTweenSettings));
-            DetectModule(dotweenSettings.modules.audioEnabled, typeof(DOTweenModuleAudio));
-            DetectModule(dotweenSettings.modules.physicsEnabled, typeof(DOTweenModulePhysics));
-            DetectModule(dotweenSettings.modules.physics2DEnabled, typeof(DOTweenModulePhysics2D));
-            DetectModule(dotweenSettings.modules.spriteEnabled, typeof(DOTweenModuleSprite));
-            DetectModule(dotweenSettings.modules.uiEnabled, typeof(DOTweenModuleUI));
+            DetectModule(dotweenSettings.modules.audioEnabled, "Audio");
+            DetectModule(dotweenSettings.modules.physicsEnabled, "Physics");
+            DetectModule(dotweenSettings.modules.physics2DEnabled, "Physics2D");
+            DetectModule(dotweenSettings.modules.spriteEnabled, "Sprite");
+            DetectModule(dotweenSettings.modules.uiEnabled, "UI");
         }
 
-        static void DetectModule(bool moduleEnabled, Type type)
+        static void DetectModule(bool moduleEnabled, string name)
         {
             if (moduleEnabled)
             {
-                AddMicroDefine(type);
+                AddMicroDefine(name);
             }
             else
             {
-                DeleteMicroDefine(type);
+                DeleteMicroDefine(name);
             }
         }
 
-        static void AddMicroDefine(Type type)
+        static void AddMicroDefine(string name)
         {
-            string name = GetMacroName(type);
+            name = GetMacroName(name);
             AddMicroDefine(EditorUserBuildSettings.selectedBuildTargetGroup, name);
             AddMicroDefine(BuildTargetGroup.Android, name);
             AddMicroDefine(BuildTargetGroup.iOS, name);
         }
 
-        static string GetMacroName(Type type)
+        static string GetMacroName(string name)
         {
-            return $"{nameof(EasyDOTween)}_{type.Name.Replace("DOTweenModule", string.Empty)}";
+            return $"{nameof(EasyDOTween)}_{name}";
         }
 
-        static void DeleteMicroDefine(Type type)
+        static void DeleteMicroDefine(string name)
         {
-            string name = GetMacroName(type);
+            name = GetMacroName(name);
             DeleteMicroDefine(EditorUserBuildSettings.selectedBuildTargetGroup, name);
             DeleteMicroDefine(BuildTargetGroup.Android, name);
             DeleteMicroDefine(BuildTargetGroup.iOS, name);
