@@ -185,21 +185,6 @@ namespace EasyDOTween
             return new CodeAttributeDeclaration(typeRef, attrArg);
         }
 
-        static bool IsSubclassOf(this Type t, Type parentType)
-        {
-            if (t.BaseType == null)
-            {
-                return false;
-            }
-            
-            if (t.BaseType == parentType)
-            {
-                return true;
-            }
-
-            return t.BaseType.IsSubclassOf(parentType);
-        }
-
         static string ToSuitedName(this Type t)
         {
             if (t == typeof(int))
