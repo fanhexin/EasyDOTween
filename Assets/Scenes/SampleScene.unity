@@ -318,7 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveTo:
     _pos: {x: 5, y: 5, z: 0}
-    _duration: 0.5
+    _duration: 1
 --- !u!65 &1133954006
 BoxCollider:
   m_ObjectHideFlags: 0
