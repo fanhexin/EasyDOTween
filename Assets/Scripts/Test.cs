@@ -6,7 +6,10 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     [SerializeField, TweenPreview]
-    MoveTo _moveTo;       
+    MoveTo _moveTo;
+
+    [SerializeField]
+    TweenAnimBundle _bundle;
 
     [Serializable]
     class MoveTo
@@ -26,5 +29,12 @@ public class Test : MonoBehaviour
         {
             return t.DOMoveY(_pos.y, _duration);
         }
+    }
+
+    [Serializable]
+    class TweenAnimBundle
+    {
+        [SerializeField, TweenPreview]
+        MoveTo _moveTo;
     }
 }

@@ -17,7 +17,7 @@ namespace EasyDOTween.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.PropertyField(position, property, true);
-            if (!property.isExpanded)
+            if (property.depth != 0 || !property.isExpanded)
             {
                 return;
             }
@@ -47,7 +47,7 @@ namespace EasyDOTween.Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             float offset = 0;
-            if (property.isExpanded && _methods != null)
+            if (property.depth == 0 && property.isExpanded && _methods != null)
             {
                 offset = _methods.Sum(x => x.height + GAP);
             }
