@@ -11,6 +11,7 @@ namespace EasyDOTween.Editor
     [CustomPropertyDrawer(typeof(TweenPreviewAttribute))]
     public class TweenPreviewer : PropertyDrawer
     {
+        const float GAP = 2f;
         MethodView[] _methods;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -22,7 +23,7 @@ namespace EasyDOTween.Editor
             }
             
             float height = EditorGUI.GetPropertyHeight(property, true);
-            position.y += height + 2f;
+            position.y += height + GAP;
 
             float h = EditorGUI.GetPropertyHeight(property, false);
             
@@ -48,7 +49,7 @@ namespace EasyDOTween.Editor
             float offset = 0;
             if (property.isExpanded && _methods != null)
             {
-                offset = _methods.Sum(x => x.height);
+                offset = _methods.Sum(x => x.height + GAP);
             }
             return EditorGUI.GetPropertyHeight(property, true) + offset;
         }
@@ -73,7 +74,7 @@ namespace EasyDOTween.Editor
 
             Tween _tween;
 
-            public MethodView(MethodInfo methodInfo, float itemHeight = 16f, float gap = 2f)
+            public MethodView(MethodInfo methodInfo, float itemHeight = 16f, float gap = GAP)
             {
                 _methodInfo = methodInfo;
                 _itemHeight = itemHeight;
