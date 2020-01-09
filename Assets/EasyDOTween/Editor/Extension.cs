@@ -1,6 +1,8 @@
+using System;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace EasyDOTween.Editor
 {
@@ -14,31 +16,31 @@ namespace EasyDOTween.Editor
             }
             else if (info.ParameterType == typeof(bool))
             {
-                value = UnityEditor.EditorGUI.ToggleLeft(position, info.Name, (bool) value);
+                value = UnityEditor.EditorGUI.ToggleLeft(position, info.Name, Convert.ToBoolean(value));
             }
             else if (info.ParameterType == typeof(int))
             {
-                value = UnityEditor.EditorGUI.IntField(position, info.Name, (int) value);
+                value = UnityEditor.EditorGUI.IntField(position, info.Name, Convert.ToInt32(value));
             }
             else if (info.ParameterType == typeof(float))
             {
-                value = UnityEditor.EditorGUI.FloatField(position, info.Name, (float) value);
+                value = UnityEditor.EditorGUI.FloatField(position, info.Name, (float)Convert.ToDouble(value));
             }
             else if (info.ParameterType == typeof(double))
             {
-                value = UnityEditor.EditorGUI.DoubleField(position, info.Name, (double) value);
+                value = UnityEditor.EditorGUI.DoubleField(position, info.Name, Convert.ToDouble(value));
             }
             else if (info.ParameterType == typeof(string))
             {
-                value = UnityEditor.EditorGUI.TextField(position, info.Name, (string) value);
+                value = UnityEditor.EditorGUI.TextField(position, info.Name, value == null ? string.Empty : (string) value);
             }
             else if (info.ParameterType == typeof(Vector3))
             {
-                value = UnityEditor.EditorGUI.Vector3Field(position, info.Name, (Vector3) value);
+                value = UnityEditor.EditorGUI.Vector3Field(position, info.Name, (Vector3?) value ?? Vector3.zero);
             }
             else if (info.ParameterType == typeof(Color))
             {
-                value = UnityEditor.EditorGUI.ColorField(position, info.Name, (Color) value);
+                value = UnityEditor.EditorGUI.ColorField(position, info.Name, (Color?) value ?? Color.white);
             }
         }
 

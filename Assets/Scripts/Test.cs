@@ -6,6 +6,12 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     [SerializeField, TweenPreview]
+    PocoDOScale _doScale;
+    
+    [SerializeField, TweenPreview]
+    PocoDOScaleSequence _doScaleSequence;
+    
+    [SerializeField, TweenPreview]
     MoveTo _moveTo;
 
     [SerializeField]
@@ -36,5 +42,20 @@ public class Test : MonoBehaviour
     {
         [SerializeField, TweenPreview]
         MoveTo _moveTo;
+    }
+
+    [Serializable]
+    public class PocoDOScale : PocoAnimation<Transform, Vector3>
+    {
+        protected override Tween Play(Transform target, Vector3 endValue, float duration)
+        {
+            return target.DOScale(endValue, duration);
+        }
+    }
+
+    [Serializable]
+    public class PocoDOScaleSequence : PocoSequence<PocoDOScale, Transform, Vector3>
+    {
+        
     }
 }

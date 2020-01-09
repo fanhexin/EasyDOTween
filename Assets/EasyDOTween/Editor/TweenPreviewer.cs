@@ -29,7 +29,7 @@ namespace EasyDOTween.Editor
             
             var attr = attribute as TweenPreviewAttribute;
             _methods = _methods ?? fieldInfo.FieldType
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                 .Where(x => x.ReturnType == typeof(Tween) && x.Name.Contains(attr.funcFilter))
                 .Select(x => new MethodView(x, h))
                 .ToArray();
@@ -78,10 +78,7 @@ namespace EasyDOTween.Editor
                 _methodInfo = methodInfo;
                 _itemHeight = itemHeight;
                 _gap = gap;
-                _parameterInfos = methodInfo.GetParameters()
-                    .Where(x => x.ParameterType.IsSubclassOf(typeof(Object)) 
-                                || x.ParameterType.IsPrimitive)
-                    .ToArray();
+                _parameterInfos = methodInfo.GetParameters();
                 _parameters = new object[_parameterInfos.Length];
                 height = (_parameters.Length + 1) * (itemHeight + gap) - gap + BORDER_SIZE * 2;
             }

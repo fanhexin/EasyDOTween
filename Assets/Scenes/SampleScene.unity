@@ -316,6 +316,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15daf318524b44347b21faa8b5d5b7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _doScale:
+    _duration: 0
+    _endValue: {x: 0, y: 0, z: 0}
+    _ease: 0
+  _doScaleSequence:
+    _animations:
+    - _duration: 0
+      _endValue: {x: 0, y: 0, z: 0}
+      _ease: 0
+    - _duration: 0
+      _endValue: {x: 0, y: 0, z: 0}
+      _ease: 0
   _moveTo:
     _pos: {x: 5, y: 5, z: 0}
     _duration: 1
