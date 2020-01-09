@@ -17,7 +17,7 @@ namespace EasyDOTween.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.PropertyField(position, property, true);
-            if (property.depth != 0 || !property.isExpanded)
+            if (!property.isExpanded)
             {
                 return;
             }
@@ -34,12 +34,11 @@ namespace EasyDOTween.Editor
                 .Select(x => new MethodView(x, h))
                 .ToArray();
 
-            var target = fieldInfo.GetValue(property.serializedObject.targetObject);
             using (new EditorGUI.IndentLevelScope())
             {
                 foreach (MethodView methodView in _methods)
                 {
-                    methodView.Render(ref position, target);
+                    methodView.Render(ref position, property);
                 }
             }
         }
@@ -47,7 +46,7 @@ namespace EasyDOTween.Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             float offset = 0;
-            if (property.depth == 0 && property.isExpanded && _methods != null)
+            if (property.isExpanded && _methods != null)
             {
                 offset = _methods.Sum(x => x.height + GAP);
             }
@@ -62,7 +61,7 @@ namespace EasyDOTween.Editor
         class MethodView
         {
             const int BORDER_SIZE = 5;
-            const int INDENT_WIDTH = 20;
+            const int INDENT_WIDTH = 15;
             
             readonly MethodInfo _methodInfo;
             readonly float _itemHeight;
@@ -87,13 +86,14 @@ namespace EasyDOTween.Editor
                 height = (_parameters.Length + 1) * (itemHeight + gap) - gap + BORDER_SIZE * 2;
             }
 
-            public void Render(ref Rect position, object target)
+            public void Render(ref Rect position, SerializedProperty property)
             {
                 Rect pos = position;
                 pos.height = height;
+                float indentWidth = INDENT_WIDTH * EditorGUI.indentLevel;
 
                 Rect boxPos = pos;
-                SetIndent(ref boxPos, INDENT_WIDTH - _gap);
+                SetIndent(ref boxPos, indentWidth - _gap);
                 GUI.Box(boxPos, string.Empty);
                 
                 pos.width -= BORDER_SIZE * 2;
@@ -108,12 +108,12 @@ namespace EasyDOTween.Editor
                     pos.y += _itemHeight + _gap;
                 }
 
-                SetIndent(ref pos, INDENT_WIDTH);
+                SetIndent(ref pos, indentWidth);
                 if (GUI.Button(pos, _tween == null ? _methodInfo.Name : "Stop"))
                 {
                     if (_tween == null)
                     {
-                        _tween = (Tween) _methodInfo.Invoke(target, _parameters);
+                        _tween = (Tween) _methodInfo.Invoke(property.ReflectionGetTarget(), _parameters);
                         _tween.OnComplete(CompleteTween);
                         DOTweenEditorPreview.PrepareTweenForPreview(_tween, false);
                         DOTweenEditorPreview.Start();
@@ -124,7 +124,7 @@ namespace EasyDOTween.Editor
                         CompleteTween();
                     }
                 }
-                SetIndent(ref pos, -INDENT_WIDTH);
+                SetIndent(ref pos, -indentWidth);
 
                 position.y = pos.y + _itemHeight + _gap + BORDER_SIZE; 
             }

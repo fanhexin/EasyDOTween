@@ -1,4 +1,5 @@
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 
 namespace EasyDOTween.Editor
@@ -39,6 +40,26 @@ namespace EasyDOTween.Editor
             {
                 value = UnityEditor.EditorGUI.ColorField(position, info.Name, (Color) value);
             }
+        }
+
+        public static object ReflectionGetTarget(this SerializedProperty sp)
+        {
+            object target = sp.serializedObject.targetObject;
+            if (sp.depth == 0)
+            {
+                return target;
+            }
+
+            object ret = null;
+            string[] propertyPath = sp.propertyPath.Split('.');
+            for (var i = 0; i < propertyPath.Length; i++)
+            {
+                string path = propertyPath[i];
+                var field = target.GetType().GetField(path, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                ret = field.GetValue(target);
+                target = ret;
+            }
+            return ret;
         }
     }
 }
