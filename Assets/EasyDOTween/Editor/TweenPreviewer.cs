@@ -4,7 +4,6 @@ using DG.DOTweenEditor;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace EasyDOTween.Editor
 {
@@ -112,8 +111,11 @@ namespace EasyDOTween.Editor
                     {
                         _tween = (Tween) _methodInfo.Invoke(property.ReflectionGetTarget(), _parameters);
                         _tween.OnComplete(CompleteTween);
-                        DOTweenEditorPreview.PrepareTweenForPreview(_tween, false);
-                        DOTweenEditorPreview.Start();
+                        if (!EditorApplication.isPlaying)
+                        {
+                            DOTweenEditorPreview.PrepareTweenForPreview(_tween, false);
+                            DOTweenEditorPreview.Start();
+                        }
                     }
                     else
                     {
@@ -128,7 +130,10 @@ namespace EasyDOTween.Editor
             
             void CompleteTween()
             {
-                DOTweenEditorPreview.Stop(true);
+                if (!EditorApplication.isPlaying)
+                {
+                    DOTweenEditorPreview.Stop(true);
+                }
                 _tween = null;
             }
 
