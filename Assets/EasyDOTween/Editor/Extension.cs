@@ -47,11 +47,6 @@ namespace EasyDOTween.Editor
         public static object ReflectionGetTarget(this SerializedProperty sp)
         {
             object target = sp.serializedObject.targetObject;
-            if (sp.depth == 0)
-            {
-                return target;
-            }
-
             object ret = null;
             string[] propertyPath = sp.propertyPath.Split('.');
             for (var i = 0; i < propertyPath.Length; i++)
