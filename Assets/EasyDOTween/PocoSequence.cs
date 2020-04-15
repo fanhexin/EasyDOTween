@@ -10,7 +10,7 @@ namespace EasyDOTween
         [SerializeField]
         A[] _animations;
         
-        public Tween Play(T target)
+        public virtual Tween Play(T target)
         {
             var sequence = DOTween.Sequence();
             foreach (A animation in _animations)

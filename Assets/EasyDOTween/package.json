@@ -1,7 +1,7 @@
 {
   "name": "com.hpcfun.easydotween",
   "displayName": "EasyDOTween",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "2018.3",
   "description": "提供各种DOtween的Shortcut扩展方法对应的MonoBehaviour包装类和Tween动画在Editor模式下的预览播放功能。",
   "keywords": ["tween", "animation", "dotween"],
